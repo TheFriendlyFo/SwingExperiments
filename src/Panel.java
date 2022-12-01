@@ -4,25 +4,25 @@ import java.awt.*;
 public class Panel extends JPanel{
     Maze maze;
     Player player;
-    Panel(Maze maze, Player player) {
-        setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(1000,1000));
-        this.maze = maze;
-        this.player = player;
+    Panel(int height, int width) {
+        this.maze = new Maze(height, width);
+        this.player = new Player();
+    }
+
+    public boolean isAccessible(int wall) {
+        return maze.isAccessible(player.getX(),player.getY(),wall);
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.clearRect(0,0,1000,1000);
+        g2d.clearRect(0,0,1000,1040);
 
-        int xShift = 500;
-
-        if (10 <= player.getX() && player.getX() <= 20) {
-            xShift = player.getX() * -50 + 500;
-        } else if (player.getX() < 10) {
-            xShift = 0;
-        }
-        int yShift = 10 < player.getY() && player.getY() < 20 ? player.getY() * -50 + 500 : 0;
+        int xShift = Math.max(Math.min(500 - player.getX() * 50, 0), -500);
+        int yShift = Math.max(Math.min(500 - player.getY() * 50, 0), -500);
 
         for (Cell[] row : maze.getCells()) {
             for (Cell column : row) {

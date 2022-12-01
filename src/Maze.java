@@ -5,7 +5,7 @@ public class Maze {
     private final Cell[][] cells;
     private final int height, width;
 
-    Maze(int height, int width, Player player) {
+    Maze(int height, int width) {
         this.height = height;
         this.width = width;
         cells = new Cell[height][width];
@@ -15,14 +15,6 @@ public class Maze {
 
     public Cell[][] getCells() {
         return cells;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
     }
 
     public boolean isAccessible(int x, int y, int wall) {
