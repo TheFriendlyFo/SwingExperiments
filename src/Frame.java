@@ -3,6 +3,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Frame extends JFrame implements KeyListener {
+    public static void main(String[] args) {
+        Frame frame = new Frame();
+    }
     Panel panel1, panel2;
     
     Frame() {

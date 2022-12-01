@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Maze {
+    private record Vertex(int inX, int inY, int inWall, int outWall) {
+    }
     private final Cell[][] cells;
     private final int height, width;
 
