@@ -1,8 +1,8 @@
 public class Cell {
     /*Walls are as follows:
-     * / 0 \
+     * / 3 \
      * 1   2
-     * \ 3 /
+     * \ 0 /
      */
     private final boolean[] walls;
     private boolean accessed;
@@ -32,4 +32,7 @@ public class Cell {
         return y;
     }
 
+    public boolean getWall(int wall) {
+        return walls[wall];
+    }
 }

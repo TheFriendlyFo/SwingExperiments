@@ -13,4 +13,12 @@ public class Player {
     public int getY() {
         return y;
     }
+
+    public void incX(boolean inc) {
+        x += inc ? 1 : -1;
+    }
+
+    public void incY(boolean inc) {
+        y += inc ? 1 : -1;
+    }
 }

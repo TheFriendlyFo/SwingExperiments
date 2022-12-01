@@ -2,31 +2,37 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Maze {
-    private final Cell[][] maze;
+    private final Cell[][] cells;
     private final int height, width;
-    private final Player player;
 
     Maze(int height, int width, Player player) {
         this.height = height;
         this.width = width;
-        this.player = player;
-        maze = new Cell[height][width];
+        cells = new Cell[height][width];
         setUpCells();
         generateMaze();
     }
 
-    public Player getPlayer() {
-        return player;
+    public Cell[][] getCells() {
+        return cells;
     }
 
-    public Cell[][] getMaze() {
-        return maze;
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public boolean isAccessible(int x, int y, int wall) {
+        return !cells[y][x].getWall(wall);
     }
 
     private void setUpCells() {
         for (int row = 0; row < height; row++) {
             for (int column = 0; column < width; column++) {
-                maze[row][column] = new Cell(column, row);
+                cells[row][column] = new Cell(column, row);
             }
         }
     }
@@ -40,7 +46,7 @@ public class Maze {
     private void generateMaze() {
         Stack<Cell> path = new Stack<>();
         int accessedCells = 1;
-        Cell currentCell = maze[0][0];
+        Cell currentCell = cells[0][0];
         ArrayList<Vertex> possibilities = new ArrayList<>();
 
         while (accessedCells < height * width) {
@@ -50,7 +56,7 @@ public class Maze {
                 int newX = currentCell.getX() + direction[0];
                 int newY = currentCell.getY() + direction[1];
                 // Checks if the cell is in bounds and hasn't been visited:
-                if (inBounds(newX, newY) && !maze[newY][newX].isAccessed()) {
+                if (inBounds(newX, newY) && !cells[newY][newX].isAccessed()) {
                     // Adds the new cell to the list of possibilities for this iteration:
                     possibilities.add(new Vertex(newX, newY, 3 - direction[2], direction[2]));
                 }
@@ -62,7 +68,7 @@ public class Maze {
                 // Lowers the wall of the old cell:
                 currentCell.lowerWall(vertex.outWall());
                 // Centers onto the new cell:
-                currentCell = maze[vertex.inY()][vertex.inX()];
+                currentCell = cells[vertex.inY()][vertex.inX()];
                 // Lowers the wall of the new cell:
                 currentCell.lowerWall(vertex.inWall());
                 // Adds the new cell to the stack:
