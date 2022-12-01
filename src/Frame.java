@@ -33,6 +33,14 @@ public class Frame extends JFrame implements KeyListener {
                 if (maze.isAccessible(player.getX(), player.getY(), 0)) {
                     player.incY(true);
                 }
+            case ('a') :
+                if (maze.isAccessible(player.getX(), player.getY(), 1)) {
+                    player.incX(false);
+                }
+            case ('d') :
+                if (maze.isAccessible(player.getX(), player.getY(), 2)) {
+                    player.incX(true);
+                }
         }
         repaint();
     }
