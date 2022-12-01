@@ -3,7 +3,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Frame extends JFrame implements KeyListener {
-    MyPanel panel;
+    Panel panel;
     Maze maze;
     Player player;
     
@@ -17,30 +17,35 @@ public class Frame extends JFrame implements KeyListener {
         this.maze = maze;
         this.player = player;
 
-        panel = new MyPanel(maze, player);
+        panel = new Panel(maze, player);
         add(panel);
         pack();
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+        System.out.print(e.getKeyChar());
         switch (e.getKeyChar()) {
             case ('w') :
                 if (maze.isAccessible(player.getX(), player.getY(), 3)) {
                     player.incY(false);
                 }
+                break;
             case ('s') :
                 if (maze.isAccessible(player.getX(), player.getY(), 0)) {
                     player.incY(true);
                 }
+                break;
             case ('a') :
                 if (maze.isAccessible(player.getX(), player.getY(), 1)) {
                     player.incX(false);
                 }
+                break;
             case ('d') :
                 if (maze.isAccessible(player.getX(), player.getY(), 2)) {
                     player.incX(true);
                 }
+                break;
         }
         repaint();
     }

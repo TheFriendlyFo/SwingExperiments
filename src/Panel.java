@@ -1,15 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class MyPanel extends JPanel implements KeyListener {
+public class Panel extends JPanel{
     Maze maze;
     Player player;
-    MyPanel(Maze maze, Player player) {
+    Panel(Maze maze, Player player) {
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(1000,1000));
-        addKeyListener(this);
         this.maze = maze;
         this.player = player;
     }
@@ -17,9 +14,15 @@ public class MyPanel extends JPanel implements KeyListener {
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.clearRect(0,0,1000,1000);
-        int xShift = 500 - player.getX() * 50;
-        int yShift = 500 - player.getY() * 50;
 
+        int xShift = 500;
+
+        if (10 <= player.getX() && player.getX() <= 20) {
+            xShift = player.getX() * -50 + 500;
+        } else if (player.getX() < 10) {
+            xShift = 0;
+        }
+        int yShift = 10 < player.getY() && player.getY() < 20 ? player.getY() * -50 + 500 : 0;
 
         for (Cell[] row : maze.getCells()) {
             for (Cell column : row) {
@@ -27,7 +30,7 @@ public class MyPanel extends JPanel implements KeyListener {
             }
         }
 
-        g2d.drawRect(510, 510, 30, 30);
+        g2d.drawRect(xShift + player.getX() * 50 + 10, yShift + player.getY() * 50 + 10, 30, 30);
     }
 
     private void paintCell(Graphics2D g2d, Cell cell, int xShift, int yShift) {
@@ -47,28 +50,4 @@ public class MyPanel extends JPanel implements KeyListener {
         }
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-        switch (e.getKeyChar()) {
-            case ('w') :
-                if (maze.isAccessible(player.getX(), player.getY(), 3)) {
-                    player.incX(false);
-                }
-            case ('s') :
-                if (maze.isAccessible(player.getX(), player.getY(), 0)) {
-                    player.incX(true);
-                }
-        }
-        repaint();
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
 }
