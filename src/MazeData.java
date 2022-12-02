@@ -23,6 +23,14 @@ public class MazeData {
         return !cells[y][x].getWall(wall);
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     private void setUpCells() {
         for (int row = 0; row < height; row++) {
             for (int column = 0; column < width; column++) {

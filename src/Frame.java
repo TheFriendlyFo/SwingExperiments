@@ -1,4 +1,18 @@
+// USE WASD AND ARROW KEYS
+// ^
+// |
+// |
+// |
+// |
+// |
+
+
+
+
+
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -9,17 +23,17 @@ public class Frame extends JFrame implements KeyListener {
     MazeDisplay maze1, maze2;
     
     Frame() {
-        setSize(2000,1000); // Sets the size, obviously:
+        setSize(1500,1000); // Sets the size, obviously:
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes the program fully stop when the X button is hit, rather than just running in the background.
         setVisible(true); // Makes the frame visible:
         addKeyListener(this);
-
-        maze1 = new MazeDisplay(new MazeData(30,30), new Player());
-        maze2 = new MazeDisplay(new MazeData(30,30), new Player());
-        maze1.setBounds(0,0,1000,1000);
-        maze2.setBounds(1000,0,1000,1000);
-        add(maze2);
-        add(maze1);
+        MazeData maze = new MazeData(30, 30);
+        maze1 = new MazeDisplay(maze, new Player(), 50);
+        maze2 = new MazeDisplay(maze, new Player(), 50);
+        maze2.setBounds(1500,0,1500,1000);
+        maze1.setBounds(0,0,1500,1000);
+        add(maze2, BorderLayout.WEST);
+        add(maze1, BorderLayout.WEST);
     }
 
     @Override
