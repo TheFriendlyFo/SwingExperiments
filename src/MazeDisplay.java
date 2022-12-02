@@ -1,20 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Panel extends JPanel{
-    Maze maze;
+public class MazeDisplay extends JPanel{
+    MazeData mazeData;
     Player player;
-    Panel(int height, int width) {
-        this.maze = new Maze(height, width);
-        this.player = new Player();
+    MazeDisplay(MazeData mazeData, Player player) {
+        setPreferredSize(new Dimension(2000,1000));
+        this.mazeData = mazeData;
+        this.player = player;
     }
 
-    public boolean isAccessible(int wall) {
-        return maze.isAccessible(player.getX(),player.getY(),wall);
-    }
-
-    public Player getPlayer() {
-        return player;
+    public void tryMove(int xInc, int yInc, int wall) {
+        if (mazeData.isAccessible(player.getX(), player.getY(), wall)) {
+            player.incX(xInc);
+            player.incY(yInc);
+        }
     }
 
     public void paint(Graphics g) {
@@ -24,7 +24,7 @@ public class Panel extends JPanel{
         int xShift = Math.max(Math.min(500 - player.getX() * 50, 0), -500);
         int yShift = Math.max(Math.min(500 - player.getY() * 50, 0), -500);
 
-        for (Cell[] row : maze.getCells()) {
+        for (Cell[] row : mazeData.getCells()) {
             for (Cell column : row) {
                 paintCell(g2d, column, xShift, yShift);
             }

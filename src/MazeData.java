@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Maze {
-    private record Vertex(int inX, int inY, int inWall, int outWall) {
+public class MazeData {
+    private record Vector(int inX, int inY, int inWall, int outWall) {
     }
     private final Cell[][] cells;
     private final int height, width;
 
-    Maze(int height, int width) {
+    MazeData(int height, int width) {
         this.height = height;
         this.width = width;
         cells = new Cell[height][width];
@@ -41,7 +41,7 @@ public class Maze {
         Stack<Cell> path = new Stack<>();
         int accessedCells = 1;
         Cell currentCell = cells[0][0];
-        ArrayList<Vertex> possibilities = new ArrayList<>();
+        ArrayList<Vector> possibilities = new ArrayList<>();
 
         while (accessedCells < height * width) {
             possibilities.clear();
@@ -52,19 +52,19 @@ public class Maze {
                 // Checks if the cell is in bounds and hasn't been visited:
                 if (inBounds(newX, newY) && !cells[newY][newX].isAccessed()) {
                     // Adds the new cell to the list of possibilities for this iteration:
-                    possibilities.add(new Vertex(newX, newY, 3 - direction[2], direction[2]));
+                    possibilities.add(new Vector(newX, newY, 3 - direction[2], direction[2]));
                 }
             }
             // If there's at least one valid unvisited cell:
             if (possibilities.size() > 0) {
                 // Selects a new cell randomly from the ones found:
-                Vertex vertex = possibilities.get((int) (Math.random() * possibilities.size()));
+                Vector vector = possibilities.get((int) (Math.random() * possibilities.size()));
                 // Lowers the wall of the old cell:
-                currentCell.lowerWall(vertex.outWall());
+                currentCell.lowerWall(vector.outWall());
                 // Centers onto the new cell:
-                currentCell = cells[vertex.inY()][vertex.inX()];
+                currentCell = cells[vector.inY()][vector.inX()];
                 // Lowers the wall of the new cell:
-                currentCell.lowerWall(vertex.inWall());
+                currentCell.lowerWall(vector.inWall());
                 // Adds the new cell to the stack:
                 path.push(currentCell);
                 accessedCells++;

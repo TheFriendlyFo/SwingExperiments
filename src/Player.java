@@ -18,11 +18,11 @@ public class Player {
         return y;
     }
 
-    public void incX(boolean inc) {
-        x += inc ? 1 : -1;
+    public void incX(int inc) {
+        x += inc;
     }
 
-    public void incY(boolean inc) {
-        y += inc ? 1 : -1;
+    public void incY(int inc) {
+        y += inc;
     }
 }
