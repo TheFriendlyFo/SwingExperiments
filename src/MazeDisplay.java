@@ -24,8 +24,8 @@ public class MazeDisplay extends JPanel{
         Graphics2D g2d = (Graphics2D) g;
         g2d.clearRect(0,0,750,1000);
 
-        int xShift = Math.max(Math.min(mazeData.getWidth()*cellSize - 750 - player.getX() * cellSize, 0), -mazeData.getWidth()*cellSize - 750);
-        int yShift = Math.max(Math.min(375 - player.getY() * cellSize, 0), -mazeData.getWidth()*cellSize - 750);
+        int xShift = -Math.min(Math.max(cellSize * player.getX() - 375, 0), cellSize + 750);
+        int yShift = -Math.min(Math.max(cellSize * player.getY() - 500, 0), cellSize + 1000);
 
         for (Cell[] row : mazeData.getCells()) {
             for (Cell column : row) {

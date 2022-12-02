@@ -27,7 +27,7 @@ public class Frame extends JFrame implements KeyListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes the program fully stop when the X button is hit, rather than just running in the background.
         setVisible(true); // Makes the frame visible:
         addKeyListener(this);
-        MazeData maze = new MazeData(30, 30);
+        MazeData maze = new MazeData(15, 15);
         maze1 = new MazeDisplay(maze, new Player(), 50);
         maze2 = new MazeDisplay(maze, new Player(), 50);
         maze2.setBounds(1500,0,1500,1000);
