@@ -1,24 +1,31 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class DisplayPanel extends JPanel{
+public class DisplayPanel extends JPanel implements ActionListener {
     private final MazeData mazeData;
     private final Player player;
     int cellSize;
     boolean solved;
+    private double time;
     DisplayPanel(MazeData mazeData, Player player, int cellSize) {
         setPreferredSize(new Dimension(750,1000));
+
         this.mazeData = mazeData;
         this.player = player;
         this.cellSize = cellSize;
-        solved = false;
+        this.solved = false;
+        this.time = 0;
+
+        Timer timer = new Timer(10, this);
+        timer.start();
     }
 
-    public boolean testSolved() {
+    public void testSolved() {
         solved = solved
                 || (player.getX() == mazeData.getWidth() - 1
                 && player.getY() == mazeData.getHeight() - 1);
-        return solved;
     }
 
     public void tryMove(int xInc, int yInc, int wall) {
@@ -29,29 +36,38 @@ public class DisplayPanel extends JPanel{
     }
 
     public void paint(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.clearRect(0,0,750,1000);
-        int xShift = -Math.min(Math.max(cellSize * player.getX() - 375, 0), cellSize * mazeData.getWidth() - 700);
-        int yShift = -Math.min(Math.max(cellSize * player.getY() - 500, 0), cellSize * mazeData.getHeight() - 1000);
+        if (!solved) {
 
-        for (Cell[] row : mazeData.getCells()) {
-            for (Cell column : row) {
-                paintCell(g2d, column, xShift, yShift);
+        } else {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.clearRect(0,0,750,1000);
+            int xShift = -Math.min(Math.max(cellSize * player.getX() - 375, 0), cellSize * mazeData.getWidth() - 700);
+            int yShift = -Math.min(Math.max(cellSize * player.getY() - 500, 0), cellSize * mazeData.getHeight() - 1000);
+
+            for (Cell[] row : mazeData.getCells()) {
+                for (Cell column : row) {
+                    paintCell(g2d, column, xShift, yShift);
+                }
             }
-        }
 
-        g2d.drawOval(
-                xShift + (mazeData.getWidth() - 1) * cellSize + cellSize / 5,
-                yShift + (mazeData.getHeight() - 1) * cellSize + cellSize / 5,
-                cellSize / 5 * 3,
-                cellSize / 5 * 3
-        );
-        g2d.drawRect(
-                xShift + player.getX() * cellSize + cellSize / 5,
-                yShift + player.getY() * cellSize + cellSize / 5,
-                cellSize / 5 * 3,
-                cellSize / 5 * 3
-        );
+            g2d.drawOval(
+                    xShift + (mazeData.getWidth() - 1) * cellSize + cellSize / 5,
+                    yShift + (mazeData.getHeight() - 1) * cellSize + cellSize / 5,
+                    cellSize / 5 * 3,
+                    cellSize / 5 * 3
+            );
+            g2d.drawRect(
+                    xShift + player.getX() * cellSize + cellSize / 5,
+                    yShift + player.getY() * cellSize + cellSize / 5,
+                    cellSize / 5 * 3,
+                    cellSize / 5 * 3
+            );
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        time += solved ? 0 : 0.01;
     }
 
     private void paintCell(Graphics2D g2d, Cell cell, int xShift, int yShift) {
@@ -70,5 +86,4 @@ public class DisplayPanel extends JPanel{
             g2d.drawLine(adjX, adjY + cellSize, adjX + cellSize, adjY + cellSize);
         }
     }
-
 }

@@ -11,6 +11,11 @@ public class Frame extends JFrame implements KeyListener {
      * perspectives and handles key commands. Only one frame is require, as it holds the entirety o the game.
      **/
     Frame(DisplayPanel lPanel, DisplayPanel rPanel) {
+        JLabel label = new JLabel();
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.CENTER);
+        label.setText("String.valueOf(time)");
+        label.setVisible(true);
         setSize(1500,1000); // Sets the size, obviously:
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes the program fully stop when the X button is hit, rather than just running in the background.
         setVisible(true); // Makes the frame visible:
@@ -19,11 +24,12 @@ public class Frame extends JFrame implements KeyListener {
         this.lPanel = lPanel;
         this.rPanel = rPanel;
 
+        lPanel.add(label);
         lPanel.setBounds(0,0,750,1000);
         rPanel.setBounds(750,0,750,1000);
 
-        add(rPanel, BorderLayout.WEST);
-        add(lPanel, BorderLayout.WEST);
+        add(rPanel);
+        add(lPanel);
     }
 
     @Override
@@ -38,10 +44,8 @@ public class Frame extends JFrame implements KeyListener {
             case (KeyEvent.VK_LEFT) -> rPanel.tryMove(-1, 0, 1);
             case (KeyEvent.VK_RIGHT) -> rPanel.tryMove(1, 0, 2);
         }
-        if (lPanel.testSolved() || rPanel.testSolved()) {
-            remove(lPanel);
-            remove(rPanel);
-        }
+        lPanel.testSolved();
+        rPanel.testSolved();
         repaint();
     }
 
