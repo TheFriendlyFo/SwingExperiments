@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -14,6 +15,7 @@ public class Frame extends JFrame implements KeyListener {
     Frame(DisplayPanel lPanel, DisplayPanel rPanel) {
         setSize(1517,1040); // Sets the size, obviously:
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes the program fully stop when the X button is hit, rather than just running in the background.
+        setBackground(Color.WHITE);
         setVisible(true); // Makes the frame visible:
         addKeyListener(this);
 

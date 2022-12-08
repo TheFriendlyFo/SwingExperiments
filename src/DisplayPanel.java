@@ -9,6 +9,7 @@ public class DisplayPanel extends JPanel implements ActionListener {
     private int cellSize;
     private boolean solved;
     private double time;
+    private final JLabel winLabel;
 
     /**
      * Holds a maze and a player traversing that maze, as well as the size of that maze to be readjusted.
@@ -16,17 +17,21 @@ public class DisplayPanel extends JPanel implements ActionListener {
      * @param player
      * @param cellSize
      */
-    DisplayPanel(MazeData mazeData, Player player, int cellSize) {
+    DisplayPanel(MazeData mazeData, Player player, int cellSize, JLabel winLabel) {
         setPreferredSize(new Dimension(750,1000));
 
         this.mazeData = mazeData;
         this.player = player;
+        this.winLabel = winLabel;
         this.cellSize = cellSize;
         this.solved = false;
         this.time = 0;
 
         Timer timer = new Timer(10, this);
         timer.start();
+        winLabel.setHorizontalTextPosition(JLabel.CENTER);
+        winLabel.setVerticalTextPosition(JLabel.CENTER);
+        winLabel.setVisible(false);
     }
 
     public MazeData getMazeData() {
@@ -58,8 +63,14 @@ public class DisplayPanel extends JPanel implements ActionListener {
         g2d.drawRect(0,0,750,1000);
         g2d.setStroke(new BasicStroke(1));
 
-        if (solved) {
-
+        if (!solved) {
+            setVisible(false);
+            winLabel.setText("Alabalaba");
+            winLabel.setVisible(true);
+            validate();
+            repaint();
+            winLabel.validate();
+            winLabel.repaint();
         } else {
             int xShift = -Math.min(Math.max(cellSize * player.getX() - 375, 0), cellSize * mazeData.getWidth() - 750);
             int yShift = -Math.min(Math.max(cellSize * player.getY() - 500, 0), cellSize * mazeData.getHeight() - 1000);
