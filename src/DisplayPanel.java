@@ -10,6 +10,7 @@ public class DisplayPanel extends JPanel implements ActionListener {
     private boolean solved;
     private double time;
     private final JLabel winLabel;
+    private Timer timer;
 
     /**
      * Holds a maze and a player traversing that maze, as well as the size of that maze to be readjusted.
@@ -27,7 +28,7 @@ public class DisplayPanel extends JPanel implements ActionListener {
         this.solved = false;
         this.time = 0;
 
-        Timer timer = new Timer(10, this);
+        timer = new Timer(10, this);
         timer.start();
         winLabel.setVisible(false);
     }
@@ -62,9 +63,10 @@ public class DisplayPanel extends JPanel implements ActionListener {
         g2d.setStroke(new BasicStroke(1));
 
         if (solved) {
-            setVisible(false);
-            winLabel.setText(String.format("Maze Solved!\nTime: %s", time));
+            timer.stop();
+            winLabel.setText(String.format("<html><body>Maze Solved!<br>Time: %.2f</body></html>", time));
             winLabel.setVisible(true);
+            setVisible(false);
             remove(this);
         } else {
             int xShift = -Math.min(Math.max(cellSize * player.getX() - 375, 0), cellSize * mazeData.getWidth() - 750);
