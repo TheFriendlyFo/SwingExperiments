@@ -11,7 +11,6 @@ public class MazeData {
         this.height = height;
         this.width = width;
         cells = new Cell[height][width];
-        setUpCells();
         generateMaze();
     }
 
@@ -45,7 +44,9 @@ public class MazeData {
         return xInBounds && yInBounds;
     }
 
-    private void generateMaze() {
+    public void generateMaze() {
+        setUpCells();
+
         Stack<Cell> path = new Stack<>();
         int accessedCells = 1;
         Cell currentCell = cells[0][0];

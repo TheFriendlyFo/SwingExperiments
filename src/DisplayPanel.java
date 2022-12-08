@@ -6,9 +6,16 @@ import java.awt.event.ActionListener;
 public class DisplayPanel extends JPanel implements ActionListener {
     private final MazeData mazeData;
     private final Player player;
-    int cellSize;
-    boolean solved;
+    private int cellSize;
+    private boolean solved;
     private double time;
+
+    /**
+     * Holds a maze and a player traversing that maze, as well as the size of that maze to be readjusted.
+     * @param mazeData
+     * @param player
+     * @param cellSize
+     */
     DisplayPanel(MazeData mazeData, Player player, int cellSize) {
         setPreferredSize(new Dimension(750,1000));
 
@@ -20,6 +27,10 @@ public class DisplayPanel extends JPanel implements ActionListener {
 
         Timer timer = new Timer(10, this);
         timer.start();
+    }
+
+    public MazeData getMazeData() {
+        return mazeData;
     }
 
     public void testSolved() {
@@ -35,13 +46,22 @@ public class DisplayPanel extends JPanel implements ActionListener {
         }
     }
 
+    public void zoom(boolean in) {
+        cellSize = Math.max(Math.min(cellSize + (in ? 5 : -5), 150), 25);
+    }
+
     public void paint(Graphics g) {
-        if (!solved) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.clearRect(0,0,750,1000);
+
+        g2d.setStroke(new BasicStroke(4));
+        g2d.drawRect(0,0,750,1000);
+        g2d.setStroke(new BasicStroke(1));
+
+        if (solved) {
 
         } else {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.clearRect(0,0,750,1000);
-            int xShift = -Math.min(Math.max(cellSize * player.getX() - 375, 0), cellSize * mazeData.getWidth() - 700);
+            int xShift = -Math.min(Math.max(cellSize * player.getX() - 375, 0), cellSize * mazeData.getWidth() - 750);
             int yShift = -Math.min(Math.max(cellSize * player.getY() - 500, 0), cellSize * mazeData.getHeight() - 1000);
 
             for (Cell[] row : mazeData.getCells()) {
