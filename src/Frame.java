@@ -24,9 +24,6 @@ public class Frame extends JFrame implements KeyListener {
 
         lPanel.setBounds(0,0,750,1000);
         rPanel.setBounds(750,0,750,1000);
-
-        add(rPanel);
-        add(lPanel);
     }
 
     @Override

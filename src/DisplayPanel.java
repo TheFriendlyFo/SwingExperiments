@@ -29,8 +29,6 @@ public class DisplayPanel extends JPanel implements ActionListener {
 
         Timer timer = new Timer(10, this);
         timer.start();
-        winLabel.setHorizontalTextPosition(JLabel.CENTER);
-        winLabel.setVerticalTextPosition(JLabel.CENTER);
         winLabel.setVisible(false);
     }
 
@@ -63,14 +61,11 @@ public class DisplayPanel extends JPanel implements ActionListener {
         g2d.drawRect(0,0,750,1000);
         g2d.setStroke(new BasicStroke(1));
 
-        if (!solved) {
+        if (solved) {
             setVisible(false);
-            winLabel.setText("Alabalaba");
+            winLabel.setText(String.format("Maze Solved!\nTime: %s", time));
             winLabel.setVisible(true);
-            validate();
-            repaint();
-            winLabel.validate();
-            winLabel.repaint();
+            remove(this);
         } else {
             int xShift = -Math.min(Math.max(cellSize * player.getX() - 375, 0), cellSize * mazeData.getWidth() - 750);
             int yShift = -Math.min(Math.max(cellSize * player.getY() - 500, 0), cellSize * mazeData.getHeight() - 1000);
