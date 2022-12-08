@@ -8,6 +8,13 @@ public class Cell {
     private boolean accessed;
     private final int x, y;
 
+    /**
+     * A cell represents one square in a maze.
+     * Each cell has 4 walls, one in each cardinal direction.
+     * Each wall is either up or down at any point, stored as a boolean.
+     * @param x
+     * @param y
+     */
     Cell(int x, int y){
         this.x = x;
         this.y = y;

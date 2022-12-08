@@ -62,7 +62,7 @@ public class DisplayPanel extends JPanel implements ActionListener {
         g2d.drawRect(0,0,750,1000);
         g2d.setStroke(new BasicStroke(1));
 
-        if (solved) {
+        if (!solved) {
             timer.stop();
             winLabel.setText(String.format("<html><body>Maze Solved!<br>Time: %.2f</body></html>", time));
             winLabel.setVisible(true);

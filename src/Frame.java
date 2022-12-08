@@ -39,7 +39,6 @@ public class Frame extends JFrame implements KeyListener {
      * Control - Randomizes mazes
      */
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
         switch (e.getKeyCode()) {
             case (87) -> lPanel.tryMove(0, -1, 3);
             case (83) -> lPanel.tryMove(0, 1, 0);
